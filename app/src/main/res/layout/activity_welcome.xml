@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" style="@style/back">
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:id="@+id/cid"
+        android:text="Hello"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:paddingLeft="20dp"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New User"
+        style="@style/BlueButton"
+        android:id="@+id/newuser"
+        android:onClick="sess1"
+        android:layout_below="@+id/cid"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:onClick="login"
+        android:id="@+id/old"
+        style="@style/BlueButton"
+        android:layout_below="@+id/newuser"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="84dp" />
+
+</RelativeLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.uploadeg"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application android:allowBackup="true">
+        <receiver
+            android:name=".NetworkChangeReceiver"
+            android:label="NetworkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".start"
+            android:label="SNEHA"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".end"
+            android:label="SNEHA"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".MainActivity"
+            android:label="SNEHA" />
+        <activity
+            android:name=".Retrieval"
+            android:label="SNEHA" />
+        <activity
+            android:name=".First"
+            android:label="SNEHA" />
+        <activity
+            android:name=".view"
+            android:label="SNEHA" />
+        <activity
+            android:name=".reg"
+            android:label="SNEHA" />
+        <activity
+            android:name=".session"
+            android:label="SNEHA" />
+        <activity
+            android:name=".welcome"
+            android:label="SNEHA" />
+        <activity
+            android:name=".choose"
+            android:label="SNEHA" />
+        <activity
+            android:name=".Home"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".upload" />
+
+        <activity
+            android:name=".PendingSession"
+            android:label="@string/title_activity_pending_session"></activity>
+    </application>
+
+</manifest>
