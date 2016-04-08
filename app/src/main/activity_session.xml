@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    style="@style/back">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="USER"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        style="@style/text2"
+        android:id="@+id/a2"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        style="@style/text2"
+        android:id="@+id/a1"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/a1"
+        android:id="@+id/l1">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/BlueButton"
+            android:layout_marginLeft="25dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Session 1"
+
+            android:id="@+id/b1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/red"
+            android:id="@+id/img1"
+            android:layout_marginLeft="50dp"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/l1"
+        android:id="@+id/l2">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BlueButton"
+        android:layout_marginLeft="25dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Session 2"
+
+        android:id="@+id/b2" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red"
+        android:id="@+id/img2"
+        android:layout_marginLeft="50dp"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/l2"
+        android:id="@+id/l3">
+
+    <Button
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+style="@style/BlueButton"
+
+android:layout_marginLeft="25dp"
+android:layout_gravity="center_horizontal"
+android:text="Session 3"
+android:id="@+id/b3" />
+
+<ImageView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:src="@drawable/red"
+    android:id="@+id/img3"
+android:layout_marginLeft="50dp"
+android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+</RelativeLayout>
