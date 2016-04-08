@@ -51,7 +51,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
     public Contact Get_ContactDetails() {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM questions where session_id=1", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM demo where session_id=1", null);
         cursor.moveToFirst();
         String a="";
         while (cursor.isAfterLast() == false){
@@ -148,36 +148,58 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
 
     public String[][] getSessionDetails(int id)
     {
-        try {
-            CopyDataBaseFromAsset();
-        }
-        catch(Exception e){}
         SQLiteDatabase db = this.getReadableDatabase();
 
         int v=0;
 
-        Cursor cs = db.rawQuery("SELECT count(*) FROM session where user_id='" + id + "'", null);
+        Cursor cs = db.rawQuery("SELECT count(*) FROM session where user_id='"+id+"' order by rowid desc", null);
         if(cs.moveToFirst())
             v = cs.getInt(0);
         Log.i("count", Integer.toString(v));
         String arr[][]=new String[v][2];
+
         int i=0;
-        cs = db.rawQuery("SELECT * FROM session where user_id='"+id+"'",null);
-        Log.i("user_id", String.valueOf(id));
+        cs = db.rawQuery("SELECT * FROM session where user_id='"+id+"' order by rowid desc",null);
         if(cs.moveToFirst())
         {
-            Log.i("user_id",String.valueOf(id));
+
+            boolean flag=false;
             while (!cs.isAfterLast())
             {
-                Log.i("userid",String.valueOf(id));
+                flag=false;
+
+                String sess=Integer.toString(cs.getInt(1));
+                for(int k=0;k<i;k++)
+                {
+                    if(arr[k][0].equals(sess))
+                    {
+                        flag=true;
+                        Log.i("yo man yo",sess);
+                        break;
+                    }
+                }
+                if(flag)
+                {
+                    cs.moveToNext();
+                    continue;
+
+                }
                 arr[i][0]=Integer.toString(cs.getInt(1));
+
                 arr[i][1]=cs.getString(4);
                 Log.i("session",arr[i][0]+arr[i][1]);
                 cs.moveToNext();
                 i++;
             }
+
         }
-        return arr;
+        String arr1[][]=new String [i][2];
+        for(int k=0;k<i;k++)
+        {
+            arr1[k][0]=arr[k][0];
+            arr1[k][1]=arr[k][1];
+        }
+        return arr1;
 
 
     }
@@ -257,16 +279,18 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
         return(x);
     }
 
-    public int insertSessionDB(long id,long session,String skipped)
+    public int insertSessionDB(String id,String session,String skipped)
     {
+
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        Log.i("id",""+id);
+        Log.i("idddddddddddddddddddd", "" + id);
+        Log.i("session_nodddddddddddd", "" + session);
         values.put("user_id",id);
-        values.put("session_no",session);
-        values.put("skipped",skipped);
+        values.put("session_no", session);
+        values.put("skipped", skipped);
         int x = (int) database.insert("session", null, values);
-        database.close();
+        //  database.close();
         return(x);
     }
 
@@ -286,5 +310,28 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
         }
         System.out.println("user_id=" + rec);
         return recc;
+    }
+    public ArrayList<HashMap<String, String>> getAllUsers() {
+        ArrayList<HashMap<String, String>> usersList;
+        usersList = new ArrayList<HashMap<String, String>>();
+        String selectQuery = "SELECT  * FROM registration";
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("userId", cursor.getString(0));
+                map.put("userName", cursor.getString(1));
+                map.put("locality", cursor.getString(2));
+                map.put("reg_date", cursor.getString(3));
+                map.put("dob", cursor.getString(4));
+                map.put("phone", cursor.getString(5));
+                map.put("ns", cursor.getString(6));
+                map.put("ss", cursor.getString(7));
+                usersList.add(map);
+            } while (cursor.moveToNext());
+        }
+        database.close();
+        return usersList;
     }
 }

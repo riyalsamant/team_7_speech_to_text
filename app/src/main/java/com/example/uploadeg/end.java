@@ -3,24 +3,19 @@ package com.example.uploadeg;
 /**
  * Created by bhairavee23 on 26/03/2016.
  */
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.support.v7.app.AlertDialog;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.TextView;
 
-        import java.util.HashMap;
-
-        import javax.microedition.khronos.opengles.GL;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class end extends AppCompatActivity {
-    long  id,session;
+    String  id,session;
     String str;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +24,9 @@ public class end extends AppCompatActivity {
         Button submit;
 
         Intent intent = getIntent();
-        id= intent.getExtras().getLong("id1");
-        session= intent.getExtras().getLong("session1");
+
+        id= String.valueOf(intent.getExtras().getString("id1"));
+        session= String.valueOf(intent.getExtras().getString("session1"));
         str = intent.getExtras().getString("skipped");
         Log.i("idE", "" + id);
         Log.i("skippedE", "" + str);
@@ -55,7 +51,7 @@ public class end extends AppCompatActivity {
 */
     }
 
-@Override
+    @Override
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Exit Application?");

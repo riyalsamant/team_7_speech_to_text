@@ -1,8 +1,8 @@
 package com.example.uploadeg;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -32,8 +32,8 @@ public class view extends Activity {
         TextView tv=(TextView)findViewById(R.id.uname);
         String xyz[] = y.split("\\s");
         id=xyz[0];
-        tv.setText(y );
-        intent = new Intent(this, session.class);
+        tv.setText(y);
+        intent = new Intent(view.this, session.class);
         Log.i("IDV",id );
         intent.putExtra("result", id);
         Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();

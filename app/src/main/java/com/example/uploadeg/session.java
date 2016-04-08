@@ -1,9 +1,8 @@
 package com.example.uploadeg;
 
-import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,18 +33,18 @@ public class session extends Activity {
         img[0]= (ImageView)findViewById(R.id.img1);
         img[1] = (ImageView)findViewById(R.id.img2);
         img[2] = (ImageView)findViewById(R.id.img3);
-        t.setText("User " + x);
+        t.setText("Beneficiary Session Details\n\n");
         id = Integer.parseInt(x);
         dbHelper = new SqlLiteDbHelper(session.this);
-
         dbHelper.openDataBase();
         String arr[][]=  dbHelper.getSessionDetails(id);
-//        Log.i("RESULT",arr[0][1]);
+
         for(int i=0;i<arr.length;i++)
         {
-            if(arr[i][1].equals("0"))
+            if(arr[i][1].equals("NA"))
             {
                 img[i].setImageResource(R.drawable.green);
+
             }
             else
             {
@@ -66,9 +65,15 @@ public class session extends Activity {
                 String[] str = s.split("\\s");
                 Intent intent = new Intent(session.this,choose.class);
                 Intent intent1=getIntent();
+                dbHelper = new SqlLiteDbHelper(session.this);
+                dbHelper.openDataBase();
+                String arr[][]=  dbHelper.getSessionDetails(id);
+                String str2 = arr[0][1];
+                Log.i("Heyy",str2);
                 String id=intent1.getExtras().getString("result");
                 intent.putExtra("session",str[1]);
                 intent.putExtra("id",id);
+                intent.putExtra("res", str2);
                 finish();
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
@@ -83,14 +88,20 @@ public class session extends Activity {
 
                 String s =  ((Button) findViewById(R.id.b2)).getText().toString();
                 String[] str = s.split("\\s");
+                dbHelper = new SqlLiteDbHelper(session.this);
+                dbHelper.openDataBase();
+                String arr[][]=  dbHelper.getSessionDetails(id);
+                String str2 = arr[1][1];
+                Log.i("heyyy",str2);
                 Intent intent = new Intent(session.this,choose.class);
                 Intent intent1=getIntent();
-                int id=intent1.getExtras().getInt("result");
+                String id=intent1.getExtras().getString("result");
                 intent.putExtra("session",str[1]);
                 intent.putExtra("id",id);
+                intent.putExtra("res",str2);
                 finish();
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -102,17 +113,21 @@ public class session extends Activity {
 
                 String s =  ((Button) findViewById(R.id.b3)).getText().toString();
                 String[] str = s.split(" ");
+                dbHelper = new SqlLiteDbHelper(session.this);
+                dbHelper.openDataBase();
+                String arr[][]=  dbHelper.getSessionDetails(id);
+                String str2 = arr[2][1];
+                Log.i("heyy",str2);
                 Intent intent = new Intent(session.this,choose.class);
                 Intent intent1=getIntent();
-                int id=intent1.getExtras().getInt("result");
+                String id=intent1.getExtras().getString("result");
                 intent.putExtra("session",str[1]);
                 intent1.putExtra("id",id);
+                intent1.putExtra("res",str2);
                 finish();
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), str[1], Toast.LENGTH_LONG).show();
+
             }
         });
     }
-
-
 }

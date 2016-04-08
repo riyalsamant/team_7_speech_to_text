@@ -1,25 +1,18 @@
 package com.example.uploadeg;
 
 import android.content.ContentValues;
-import android.content.ContextWrapper;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-
-import android.content.Context;
-import android.database.SQLException;
-import android.util.Log;
-import android.widget.Toast;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by riyal on 11/12/2015.
@@ -120,7 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //db = this.getWritableDatabase();
         int i = 0;
         x=1;
-        String query = "select * from questions where session_id='" + x + "'";
+        String query = "select * from demo where session_id='" + x + "'";
         Cursor cs = db.rawQuery(query, null);
         if (cs.moveToFirst()) {
             a[i++] = cs.getString(0);
@@ -133,16 +126,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return a;
     }
 
-    public String[] pendingSession(String id,String sno)
+    public String pendingSession(String id,String sno)
     {
-        db=openDataBase();
-        String query = "select * from session where session_no='" + sno + "' AND user_id='"+id+"'";
+        db=getReadableDatabase();
+        String query = "select * from session where session_no='" + sno + "' AND user_id='"+id+"' order by rowid desc LIMIT 1";
         Cursor cs = db.rawQuery(query, null);
-      cs.moveToFirst();
+        cs.moveToFirst();
         String  a=cs.getString(4);
-            String ques[]=a.split(",");
-            cs.close();
-        return ques;
+        Log.i("RESULTTTT",a);
+        String ques[]=null;
+        if(a.contains(","))
+            ques=a.split(",");
+        cs.close();
+        return a;
 
     }
 

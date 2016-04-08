@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +40,6 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
@@ -155,7 +152,7 @@ public class Retrieval extends Activity {
                     // show the values in our logcat
                     Log.e(TAG, "user_id: " + user_id
                             + ", session_no: " + session_no
-                            + ", question_no: " + question_no
+                            + ", question_no: " + (Integer.parseInt(question_no))
                             + ", transcribed_ans: " + transcribed_ans);
 
                     HashMap<String, String> user = new HashMap<String, String>();
@@ -241,7 +238,7 @@ public class Retrieval extends Activity {
             try {
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httppost = new HttpPost(url + "update.php");
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs,"utf-8"));
                 HttpResponse response = httpclient.execute(httppost);
                 HttpEntity entity = response.getEntity();
                 is = entity.getContent();
