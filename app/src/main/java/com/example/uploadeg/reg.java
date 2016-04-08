@@ -1,20 +1,16 @@
 package com.example.uploadeg;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.app.DatePickerDialog;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -110,7 +106,7 @@ import java.util.HashMap;
             int xy = sdb.insertDB(hp);//check this
             Toast.makeText(getApplicationContext(), "success "+xy, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this,MainActivity.class);
-            int x =5;
+            int x=6;
             intent.putExtra("id",xy);
             intent.putExtra("no",x);
             intent.putExtra("session",1);

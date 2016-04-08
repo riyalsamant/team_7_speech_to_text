@@ -12,11 +12,11 @@ ArrayList<String> question;
 
     public String getQuestion(int i) {
         String a="";
+        i=i-6;
         //for(int i=0;i<question.size();i++)
-        if(i<10)
+        if(i<6)
         {
-            a=question.get(i);
-           // i++;
+            a=question.get(i);// i++;
         }
         else
             a="finish";

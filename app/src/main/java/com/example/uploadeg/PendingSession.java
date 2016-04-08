@@ -1,11 +1,11 @@
 package com.example.uploadeg;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
@@ -29,6 +29,7 @@ public class PendingSession extends Activity {
     VisualizerView visualizerView;
     public static final int REPEAT_INTERVAL = 40;
     public static String s=null, con=null;
+    public static String ques[]=null;
     private Handler handler;
     Contact contacts ;
     static int i=0;
@@ -44,7 +45,7 @@ public class PendingSession extends Activity {
     String url="Sneha/";
     boolean isRecording=false;
     View fullview;
-    long id,session;
+    String id,session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +56,23 @@ public class PendingSession extends Activity {
         contacts = new Contact();
         contacts = dbHelper.Get_ContactDetails();
         skipped = new ArrayList<String>();
-        setContentView(R.layout.activity_main);
+
         fullview = (View)findViewById(R.id.fullview);
         visualizerView = (VisualizerView) findViewById(R.id.visualizer);
         handler = new Handler();
         Intent intent=getIntent();
-       String id=intent.getExtras().getString("id");
-        String session=intent.getExtras().getString("session");
-        String ques[]=intent.getExtras().getStringArray("ques");
-
+        id=intent.getExtras().getString("id");
+        session=intent.getExtras().getString("session");
+        final String q=intent.getExtras().getString("ques");
+        final String ques[]=q.split(",");
         if(count==0)
+        {
+            if(k>=ques.length)
+                k=0;
             no= Integer.parseInt(ques[k]);
+            k++;
+
+        }
         id= intent.getExtras().getString("id");
         record=(Button)findViewById(R.id.button);
         skip=(ImageButton)findViewById(R.id.skip);
@@ -88,10 +95,10 @@ public class PendingSession extends Activity {
 
         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Sneha/"+string+"_recording-"+(no)+".mp3";
         String str = null;
-        con = contacts.getQuestion(no-1);
-        if(!con.equals("finish"))
+        con = contacts.getQuestion(no);
+        if(k<=ques.length)
             t1.setText("Question "+(no)+" : \n\n"+con);
-        if(con.equals("finish"))
+        if(k>ques.length)
         {
             t1.setText("Session Completed\nClick Button To finish");
             skip.setEnabled(false);
@@ -113,16 +120,18 @@ public class PendingSession extends Activity {
             public void onClick(View v) {
 
                 //skipped.add(String.valueOf(no));
-                if(i==0)
+                if(s==null)
                 {
-                    s=String.valueOf(no+1);
-                    i++;
+                    s=String.valueOf(no);
+
                 }
                 else
                 {
-                    s+=","+String.valueOf(no+1);
+                    s+=","+String.valueOf(no);
                 }
-                no++;
+                if(k<ques.length)
+                    no=Integer.parseInt(ques[k]);
+                k++;
                 count+=2;
                 Intent intent = getIntent();
                 finish();
@@ -171,7 +180,9 @@ public class PendingSession extends Activity {
 
                         try {
                             m.setDataSource(outputFile);
-                            no++;
+                            if(k<ques.length)
+                                no=Integer.parseInt(ques[k]);
+                            k++;
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
@@ -219,7 +230,6 @@ public class PendingSession extends Activity {
             myAudioRecorder.reset();
             myAudioRecorder.release();
             myAudioRecorder = null;
-            Log.i("S", s);
         }
     }
     public void finish1(View view) {
@@ -229,7 +239,7 @@ public class PendingSession extends Activity {
             str+=","+skipped.get(i);
         }*/
         if(s==null)
-            s="0";
+            s="NA";
         Intent intent = new Intent(this, end.class);
         intent.putExtra("session1",session);
         intent.putExtra("id1", id);
@@ -239,6 +249,7 @@ public class PendingSession extends Activity {
         Log.i("sessionMA", "" + session);
         //finish();
         count=0;
+        s=null;
         startActivity(intent);
     }
     @Override

@@ -3,20 +3,16 @@ package com.example.uploadeg;
 /**
  * Created by RAMS on 10-Mar-16.
  */
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-
 import android.os.Bundle;
 import android.os.Environment;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
@@ -54,7 +50,7 @@ public class MainActivity extends Activity {
     String url="Sneha/";
     boolean isRecording=false;
     View fullview;
-    long id,session;
+    String id,session;
     String coid="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +70,8 @@ public class MainActivity extends Activity {
         Intent intent = getIntent();
         if(count==0)
             no= intent.getExtras().getInt("no");
-        id= intent.getExtras().getInt("id");
-        session= intent.getExtras().getInt("session");
+        id= String.valueOf(intent.getExtras().getInt("id"));
+        session= String.valueOf(intent.getExtras().getInt("session"));
         record=(Button)findViewById(R.id.button);
         skip=(ImageButton)findViewById(R.id.skip);
         t1 = (TextView) findViewById(R.id.que);
@@ -100,7 +96,7 @@ public class MainActivity extends Activity {
         String str = null;
         con = contacts.getQuestion(no);
         if(!con.equals("finish"))
-            t1.setText("Question "+(no+1)+" : \n\n"+con);
+            t1.setText("Question "+(no)+" : \n\n"+con);
         if(con.equals("finish"))
         {
             t1.setText("Session Completed\nClick Button To finish");
@@ -123,14 +119,14 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 //skipped.add(String.valueOf(no));
-                if(i==0)
+                if(s==null)
                 {
-                    s=String.valueOf(no+1);
-                    i++;
+                    s=String.valueOf(no);
+
                 }
                 else
                 {
-                    s+=","+String.valueOf(no+1);
+                    s+=","+String.valueOf(no);
                 }
                 no++;
                 count+=2;
@@ -229,7 +225,6 @@ public class MainActivity extends Activity {
             myAudioRecorder.reset();
             myAudioRecorder.release();
             myAudioRecorder = null;
-            Log.i("S",s);
         }
     }
     public void finish1(View view) {
@@ -239,16 +234,19 @@ public class MainActivity extends Activity {
             str+=","+skipped.get(i);
         }*/
         if(s==null)
-            s="0";
+            s="NA";
         Intent intent = new Intent(this, end.class);
         intent.putExtra("session1",session);
         intent.putExtra("id1", id);
-        intent.putExtra("skipped",s);
+        intent.putExtra("skipped", s);
         Log.i("idMA", "" + id);
         Log.i("skipped", "" + s);
         Log.i("sessionMA", "" + session);
         i=0;
         count=0;
+        s=null;
+        Intent serviceIntent = new Intent(this,upload.class);
+        this.startService(serviceIntent);
         //finish();
         startActivity(intent);
     }
